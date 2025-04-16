@@ -174,7 +174,7 @@
         <groupId>net.bytebuddy</groupId>
         <artifactId>byte-buddy</artifactId>
         <version>${byte-buddy.version}</version>
-        <scope>test</scope>
+        <!-- <scope>test</scope> -->
       </dependency>
       <dependency>
         <groupId>com.squareup.okhttp3</groupId>
@@ -618,7 +618,7 @@
         <groupId>org.jboss.logging</groupId>
         <artifactId>jboss-logging</artifactId>
         <version>${jboss-logging.version}</version>
-        <scope>provided</scope>
+        <!-- <scope>provided</scope> -->
       </dependency>
       <dependency>
         <groupId>org.jboss.arquillian.graphene</groupId>
@@ -631,6 +631,11 @@
         <groupId>joda-time</groupId>
         <artifactId>joda-time</artifactId>
         <version>${joda-time.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.datatype</groupId>
+        <artifactId>jackson-datatype-jsr310</artifactId>
+        <version>2.17.0</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -786,7 +791,7 @@
                   </regexMessage>
                 </requireProperty>
                 <requireJavaVersion>
-                  <version>[21,23)</version>
+                  <version>[21,23]</version>
                 </requireJavaVersion>
               </rules>
               <fail>true</fail>

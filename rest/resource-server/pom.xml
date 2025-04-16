@@ -24,6 +24,13 @@
     <artifactId>resource-server</artifactId>
     <packaging>war</packaging>
     <properties>
+        <jackson-version>2.17.1</jackson-version>
+        <jackson-databind-nullable-version>0.2.6</jackson-databind-nullable-version>
+        <jakarta-annotation-version>2.1.1</jakarta-annotation-version>
+        <beanvalidation-version>3.0.2</beanvalidation-version>
+        <httpmime-version>4.5.14</httpmime-version>
+        <junit-version>5.10.2</junit-version>
+        <spotless.version>2.27.2</spotless.version>
         <artifact.deploy.dir>${backend.deploy.dir}</artifact.deploy.dir>
     </properties>
 
@@ -157,6 +164,11 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.sw360</groupId>
+            <artifactId>backend-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.sw360</groupId>
             <artifactId>rest-common</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -199,11 +211,96 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc-openapi-stater-common.version}</version>
         </dependency>
+        <!-- <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>2.8.6</version>
+        </dependency> -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-common</artifactId>
             <version>${springdoc-openapi-stater-common.version}</version>
         </dependency>
+        <dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.1</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.7.0</version>
+		</dependency> -->
+        <!-- <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>dummy</version>
+        </dependency> -->
+
+		<!-- JSON processing: jackson -->
+        <!-- <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>${jakarta-annotation-version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>${httpmime-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency> -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>2.18.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>${jboss-logging.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.12.2</version>
+            <scope>test</scope>
+        </dependency> -->
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -221,6 +318,33 @@
             <id>fatjar</id>
             <build>
                 <plugins>
+                    <!-- <plugin>
+                        <groupId>org.openapitools</groupId>
+                        <artifactId>openapi-generator-maven-plugin</artifactId>
+                        <version>7.12.0</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <inputSpec>
+                                        ${project.basedir}/src/main/resources/component.yml
+                                    </inputSpec>
+                                    <generatorName>spring</generatorName>
+                                    <apiPackage>org.eclipse.sw360.rest.resourceserver.componentsApi</apiPackage>
+                                    <modelPackage>org.eclipse.sw360.rest.resourceserver.componentsModel</modelPackage>
+                                    <supportingFilesToGenerate>
+                                        ApiUtil.java
+                                    </supportingFilesToGenerate>
+                                    <configOptions>
+                                        <delegatePattern>true</delegatePattern>
+                                        <useSpringBoot3>true</useSpringBoot3>
+                                    </configOptions>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin> -->
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -241,6 +365,37 @@
     <build>
         <finalName>resource</finalName>
         <plugins>
+            <!-- <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.12.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/src/main/resources/component.yml
+                            </inputSpec>
+                            <generatorName>spring</generatorName>
+                            <apiPackage>org.eclipse.sw360.rest.resourceserver.componentsApi.api</apiPackage>
+                            <modelPackage>org.eclipse.sw360.datahandler.componentsApi.model</modelPackage>
+                            <supportingFilesToGenerate>
+                                ApiUtil.java
+                            </supportingFilesToGenerate>
+                            <generateApis>false</generateApis>
+                            <configOptions>
+                                <delegatePattern>false</delegatePattern>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEE>true</useJakartaEE>
+                                <interfaceOnly>true</interfaceOnly>
+                            </configOptions>
+                            <schemaMappings>Pageable=org.springframework.data.domain.Pageable</schemaMappings>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>
                 <artifactId>git-commit-id-maven-plugin</artifactId>
@@ -265,14 +420,12 @@
                     <validationShouldFailIfNoMatch>false</validationShouldFailIfNoMatch>
                     <generateGitPropertiesFile>false</generateGitPropertiesFile>
                     <gitDescribe>
-                        <!--
                          Run `git describe -tags` to consider lightweight tags
                          https://github.com/git-commit-id/git-commit-id-maven-plugin/#git-describe-and-a-small-gotcha-with-tags
-                         -->
                         <tags>true</tags>
                     </gitDescribe>
                 </configuration>
-            </plugin>
+            </plugin> -->
             <plugin>
                 <groupId>com.internetitem</groupId>
                 <artifactId>write-properties-file-maven-plugin</artifactId>

@@ -100,4 +100,8 @@ RUN --mount=type=bind,target=/build/sw360,rw \
     && cp /etc/sw360/manager/tomcat-users.xml ${TOMCAT_DIR}/conf/tomcat-users.xml \
     && cp /build/sw360/scripts/docker-config/manager/context.xml ${TOMCAT_DIR}/webapps/manager/META-INF/context.xml
 
+# Support running as non-root user
+RUN --mount=type=bind,target=/build/sw360,rw \
+    chown -R ubuntu:ubuntu ${TOMCAT_DIR}/
+
 WORKDIR ${TOMCAT_DIR}
